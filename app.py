@@ -151,7 +151,7 @@ if page == "📊 Overview":
     
     with col1:
         # Commodity distribution
-        commodity_counts = staples['mp_commodityname'].value_counts().head(8)
+        commodity_counts = staples['cm_name'].value_counts().head(8)
         fig = px.bar(
             x=commodity_counts.values,
             y=commodity_counts.index,
@@ -176,7 +176,7 @@ if page == "📊 Overview":
     # Quick stats
     st.markdown("<h2 class='sub-header'>Key Statistics</h2>", unsafe_allow_html=True)
     
-    maize_data = staples[staples['mp_commodityname'] == 'Maize (white) - Retail']
+    maize_data = staples[staples['cm_name'] == 'Maize (white) - Retail']
     
     col1, col2, col3 = st.columns(3)
     
@@ -203,11 +203,11 @@ elif page == "📈 Price Trends":
     st.markdown("<h1 class='main-header'>📈 Price Trends Analysis</h1>", unsafe_allow_html=True)
     
     # Commodity selector
-    commodities = sorted(staples['mp_commodityname'].unique())
+    commodities = sorted(staples['cm_name'].unique())
     selected_commodity = st.selectbox("Select Commodity", commodities, index=0)
     
     # Filter data
-    commodity_data = staples[staples['mp_commodityname'] == selected_commodity]
+    commodity_data = staples[staples['cm_name'] == selected_commodity]
     
     # National average time series
     national_avg = commodity_data.groupby('date')['mp_price'].mean().reset_index()
@@ -286,10 +286,10 @@ elif page == "🗺️ Regional Analysis":
     st.markdown("<h1 class='main-header'>🗺️ Regional Price Analysis</h1>", unsafe_allow_html=True)
     
     # Commodity selector
-    commodities = sorted(staples['mp_commodityname'].unique())
+    commodities = sorted(staples['cm_name'].unique())
     selected_commodity = st.selectbox("Select Commodity", commodities, index=0)
     
-    commodity_data = staples[staples['mp_commodityname'] == selected_commodity]
+    commodity_data = staples[staples['cm_name'] == selected_commodity]
     
     # Regional average prices
     st.markdown("<h2 class='sub-header'>Average Prices by Region</h2>", unsafe_allow_html=True)
@@ -345,7 +345,7 @@ elif page == "💰 Inflation Calculator":
     """)
     
     # Maize inflation (most tracked commodity)
-    maize_data = staples[staples['mp_commodityname'] == 'Maize (white) - Retail']
+    maize_data = staples[staples['cm_name'] == 'Maize (white) - Retail']
     maize_monthly = maize_data.groupby('date')['mp_price'].mean().reset_index()
     maize_monthly.columns = ['date', 'price']
     maize_monthly = maize_monthly.sort_values('date')

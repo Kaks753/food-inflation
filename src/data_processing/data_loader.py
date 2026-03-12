@@ -60,7 +60,8 @@ class DataLoader:
     
     def filter_by_commodity(self, df: pd.DataFrame, commodity: str) -> pd.DataFrame:
         """Filter dataset by commodity name"""
-        filtered = df[df['mp_commodityname'] == commodity].copy()
+        # Use cm_name column (actual column in WFP data)
+        filtered = df[df['cm_name'] == commodity].copy()
         print(f"✓ Filtered to {len(filtered):,} records for {commodity}")
         return filtered
     
@@ -98,7 +99,7 @@ class DataLoader:
     
     def get_commodity_list(self, df: pd.DataFrame) -> List[str]:
         """Get list of unique commodities"""
-        commodities = sorted(df['mp_commodityname'].unique())
+        commodities = sorted(df['cm_name'].unique())
         return commodities
     
     def get_region_list(self, df: pd.DataFrame) -> List[str]:
@@ -122,7 +123,7 @@ class DataLoader:
         
         summary = {
             'total_records': len(df),
-            'unique_commodities': df['mp_commodityname'].nunique(),
+            'unique_commodities': df['cm_name'].nunique(),
             'unique_markets': df['mkt_name'].nunique(),
             'unique_regions': df['adm1_name'].nunique(),
             'date_range': (df['date'].min().strftime('%Y-%m-%d'), 
