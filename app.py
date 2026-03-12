@@ -126,7 +126,7 @@ if page == "📊 Overview":
     with col2:
         st.metric(
             label="🌾 Commodities",
-            value=staples['mp_commodityname'].nunique(),
+            value=staples['cm_name'].nunique(),
             delta=None
         )
     
